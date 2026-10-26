@@ -1,8 +1,9 @@
 from dialogue import DialogueManager
+from data.case_1 import test_suspect
 
 def main():
     ui = DialogueManager()
-    ui.speak("Detective Paw", "It was a dark, stormy night...")
+    ui.speak(test_suspect.get_name(), test_suspect.get_dialogue())
     print("Test complete.")
 
 if __name__ == "__main__":
