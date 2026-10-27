@@ -1,5 +1,6 @@
 from dialogue import DialogueManager
 from data.case_1 import test_suspect
+from state import GameState
 
 def main():
     ui = DialogueManager()
