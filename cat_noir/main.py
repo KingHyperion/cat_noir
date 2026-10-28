@@ -30,7 +30,7 @@ def main():
             input("     [Press Enter to continue...]")
         
         elif choice == "3":
-            print("Goodbye!")
+            print("\nGoodbye!")
             break
 
 if __name__ == "__main__":
