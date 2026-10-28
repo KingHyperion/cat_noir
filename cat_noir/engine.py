@@ -37,7 +37,6 @@ class DetectiveEngine:
         count = len(self._state.get_interrogated_suspects())
         current_act = self._state.get_act()
 
-        # Act 3 Trigger: Unlocked after interrogating enough suspects and uncovering the plot
         if count >= 4 and current_act == 2:
             self._state.set_act(3)
             if "meowbert" not in self._state.get_active_suspects():
@@ -64,7 +63,6 @@ class DetectiveEngine:
         input("     [Press Enter to continue...]")
 
         if loc_id == "town":
-            # If player visits town in Act 1, they check the alibi and trigger Act 2 organically
             if self._state.get_act() == 1:
                 self._ui.speak(
                     "Diner Owner",
@@ -77,7 +75,6 @@ class DetectiveEngine:
                 print("=" * 50)
                 input("     [Press Enter to continue...]")
             else:
-                # In Act 2 or higher, town interaction leads to the suspicious courier
                 self._interrogate_suspect("courier")
         else:
             for s_id in location.get_suspect_ids():
