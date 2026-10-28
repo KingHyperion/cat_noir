@@ -1,4 +1,3 @@
-# data_loader.py
 class Suspect:
     def __init__(self, suspect_id: str, name: str, alibi: str, dialogue: str):
         self._suspect_id = suspect_id

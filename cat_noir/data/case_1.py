@@ -1,11 +1,10 @@
-# data/case_1.py
 from data_loader import CaseData, Location, Suspect
 
-CASE_1 = CaseData(
+case_1 = CaseData(
     title="The Case of the Golden Tuna",
     initial_suspect_ids=["groundskeeper", "maid", "cook", "pool_boy"],
     suspects={
-        "groundskeeper": Suspect("groundskeeper", "Groundskeeper", "Claims he was trimming hedges at 10 PM.", "I was trimming hedges at 10 PM sharp!"),
+        "groundskeeper": Suspect("groundskeeper", "Groundskeeper", "Claims he was trimming hedges at 10 PM.", "I was trimming hedges at 10 PM sharp... Stop putting your nose in my business!"),
         "pool_boy": Suspect("pool_boy", "Pool Boy", "Claims he was testing pool chemicals at 10 PM.", "I was at the pool. But I saw the Maid leaving early."),
         "maid": Suspect("maid", "Maid", "Claims she was cleaning the Manor study at 10 PM.", "I was in the study! The Cook was acting nervous."),
         "cook": Suspect("cook", "Cook", "Claims he was prepping fish at the Restaurant all evening.", "I was in the kitchen! Sir Meowbert locked his office late."),
