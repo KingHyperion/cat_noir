@@ -15,8 +15,7 @@ cat_noir/
 ├── dialogue.py        # Dialogue pacing and `=-=` clue prompt UI
 ├── data_loader.py     # OOP classes (Suspect, Location, CaseData)
 └── cases/
-    ├── case_1.py      # Official Case: The Case of the Golden Tuna
-    └── case_2.py      # Community Mod Example
+    └── case_1.py      # Official Case: The Case of the Golden Tuna
 ```
 
 ## Core Features
