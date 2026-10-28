@@ -1,102 +1,40 @@
-### Hi! Welcome to your VS-Code Space!
+# Cat Noir: Moddable Mystery Engine
 
-You can use this just like you would vs-code on your own computer! For security reasons, we can not give you root access to the container, but we have preinstalled a number of development tools for you!
+A modular, text-based terminal mystery game built in Python featuring dynamic case loading and community mod pack support. Play as Detective Paw to investigate crime scenes, verify alibis, interrogate suspects, and solve complex cases.
 
-#### Pre-installed tools:
-If a tool you need is not listed, attempt to install it using one of the package managers listed, and if that is not possible, ask in #spaces on slack and I can probably add the tool!
+## Architecture & Modding
 
-If a tool listed here is not working, wait a few minutes and try again! The installation is ran in the background upon space creation to minimize space creation times, so you might have to wait a minute or two for all tools to become available
+The game engine is completely decoupled from story data. All triggers, suspects, locations, and custom endings are declared directly inside case files located in the `cases/` directory.
 
-##### Hackatime
-
-Make sure to set your hackatime api key in settings! if you have done that, Hackatime has been auto installed and set up for you, and will be tracking your time
-
-##### General
+### Project File Structure
 ```
-git
-github-cli
-curl
-wget
-nano
-vim
-unzip
-zip
-build-essentials
-cmake
-pkg-config
-jq
-tree
-htop
-tmux
-less
-ripgrep
-fd-find
-rsync
-openssh-client
-apt-transport-https
-ca-certificates
-gnupg
-```
-##### Python:
-```
-python3
-python3-pip
-python3-venv
-python3-dev
-python3-setuptools
-uv
+cat_noir/
+├── main.py            # Dynamic case loader, menu system, and game loop
+├── engine.py          # Generic rules evaluator & investigator
+├── state.py           # GameState tracking (acts, time, journal, saves)
+├── dialogue.py        # Dialogue pacing and `=-=` clue prompt UI
+├── data_loader.py     # OOP classes (Suspect, Location, CaseData)
+└── cases/
+    ├── case_1.py      # Official Case: The Case of the Golden Tuna
+    └── case_2.py      # Community Mod Example
 ```
 
-##### Javascript:
-```
-nodejs
-npm
-yarn
-pnpm
-```
+## Core Features
 
-##### Java:
-```
-openjdk-17-jdk
-openjdk-17-jre
-```
+* **Dynamic Case Loader:** Automatically scans the `cases/` folder on startup so you can drop in new custom mystery files without modifying core engine code.
+* **Manual Pacing:** Interactive pause prompts (`[Press Enter to continue...]`) keep text readable.
+* **Organic Investigation Loops:** Act progression and plot twists trigger naturally through gameplay actions (such as verifying alibis in Town Square).
+* **Customizable Journal & Saves:** Save default clues or write your own custom notes. Progress is serialized per case to unique JSON save files (`savegame_<case_id>.json`).
 
-##### Rust:
-```
-rust
-cargo
-```
+## Running the Game
 
-##### PHP:
-```
-php 
-php-cli 
-php-common 
-php-curl 
-php-json 
-php-mbstring 
-php-xml 
-php-zip
-```
+1. Ensure your folder structure matches the layout above with a `cases/` subfolder.
+2. Run the entry point:
+   ```bash
+   python main.py
+   ```
+3. Select your case from the terminal menu and begin your investigation.
 
-##### Database:
-```
-sqlite3
-postgresql-client
-mysql-client
-redis-tools
-```
+## Creating a Custom Case
 
-##### Ruby:
-```
-ruby
-rails
-```
-
-###### Other:
-```
-go
-crystal
-ffmpeg
-imagemagick
-```
+To create a mod pack, add a new `.py` file to the `cases/` directory, instantiate a `CaseData` object with your own custom dialogue and triggers, and run the game!
