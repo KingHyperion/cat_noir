@@ -4,7 +4,7 @@ class DialogueManager:
         input("     [Press Enter to continue...]")
 
     def prompt_note_creation(self, default_clue: str):
-        print("\n--- Clue Discovered ---")
+        print("\n=-= Clue Discovered =-=")
         print(f'Default Note: "{default_clue}"')
         print("1. Save default note")
         print("2. Save custom note")
