@@ -37,16 +37,8 @@ class DetectiveEngine:
         count = len(self._state.get_interrogated_suspects())
         current_act = self._state.get_act()
 
-        if count == 3 and current_act == 1:
-            self._state.set_act(2)
-            print("\n" + "=" * 50)
-            print("=-= Plot Twist: Red Herring Detected! =-=")
-            print("The Groundskeeper's alibi checks out. He's a red herring!")
-            print("New witnesses have appeared at Town Square.")
-            print("=" * 50)
-            input("     [Press Enter to continue...]")
-        
-        elif count >= 4 and current_act == 2:
+        # Act 3 Trigger: Unlocked after interrogating enough suspects and uncovering the plot
+        if count >= 4 and current_act == 2:
             self._state.set_act(3)
             if "meowbert" not in self._state.get_active_suspects():
                 self._state.add_active_suspect("meowbert")
@@ -72,13 +64,21 @@ class DetectiveEngine:
         input("     [Press Enter to continue...]")
 
         if loc_id == "town":
-            if self._state.get_act() >= 2:
-                self._interrogate_suspect("courier")
-            else:
+            # If player visits town in Act 1, they check the alibi and trigger Act 2 organically
+            if self._state.get_act() == 1:
                 self._ui.speak(
                     "Diner Owner",
-                    "Groundskeeper was here eating soup at 10 PM. Solid alibi.",
+                    "Groundskeeper was here eating soup at 10 PM. His alibi checks out completely!",
                 )
+                self._state.set_act(2)
+                print("\n" + "=" * 50)
+                print("=-= Plot Twist: Red Herring Detected! =-=")
+                print("The Groundskeeper was a red herring! New leads have opened up in town.")
+                print("=" * 50)
+                input("     [Press Enter to continue...]")
+            else:
+                # In Act 2 or higher, town interaction leads to the suspicious courier
+                self._interrogate_suspect("courier")
         else:
             for s_id in location.get_suspect_ids():
                 self._interrogate_suspect(s_id)
@@ -100,6 +100,11 @@ class DetectiveEngine:
     def accuse(self):
         if len(self._state.get_journal()) < 2:
             print("\n[!] You need at least 2 clues in your journal first.")
+            input("     [Press Enter to continue...]")
+            return False
+        
+        if self._state.get_act() < 3:
+            print("\n[!] You don't have enough evidence linking anyone to a major conspiracy yet. Keep investigating!")
             input("     [Press Enter to continue...]")
             return False
         
@@ -129,11 +134,11 @@ class DetectiveEngine:
         print("Case Closed: Sir Meowbert staged the theft for insurance.")
         print("=" * 50)
         self._ui.speak(
-            "Detective Paw",
-            "You hired the courier to fake a heist and claim the policy payout!",
+            "Sir Meowbert", "Curses! How did you figure out I hired the courier?!"
         )
         self._ui.speak(
-            "Sir Meowbert", "Curses! Foiled by a cat with a notebook!"
+            "Detective Paw",
+            "The financial records and the courier's testimony don't lie. You staged the whole thing.",
         )
         print("\n=-= Post-Game =-=")
         self._ui.speak(
