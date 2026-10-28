@@ -39,7 +39,7 @@ class DetectiveEngine:
 
         if count == 3 and current_act == 1:
             self._state.set_act(2)
-            printprint("\n" + "=" * 50)
+            print("\n" + "=" * 50)
             print("=-= Plot Twist: Red Herring Detected! =-=")
             print("The Groundskeeper's alibi checks out. He's a red herring!")
             print("New witnesses have appeared at Town Square.")
@@ -49,6 +49,7 @@ class DetectiveEngine:
         elif count >= 4 and current_act == 2:
             self._state.set_act(3)
             if "meowbert" not in self._state.get_active_suspects():
+                self._state.add_active_suspect("meowbert")
                 print("\n" + "=" * 50)
                 print("=-= Breakthrough: Insurance Fraud =-=")
                 print("Financial records show Sir Meowbert insured the tuna.")
@@ -83,18 +84,18 @@ class DetectiveEngine:
                 self._interrogate_suspect(s_id)
     
     def _interrogate_suspect(self, suspect_id: str):
-            suspects = self._case.get_suspects()
-            suspect = suspects[suspect_id]
+        suspects = self._case.get_suspects()
+        suspect = suspects[suspect_id]
 
-            self._ui.speak(suspect.get_name(), suspect.get_dialogue())
+        self._ui.speak(suspect.get_name(), suspect.get_dialogue())
 
-            clue_text = f"{suspect.get_name()}: {suspect.get_alibi()}"
-            saved_note = self._ui.prompt_note_creation(clue_text)
-            if saved_note:
-                self._state.add_journal_entry(saved_note)
+        clue_text = f"{suspect.get_name()}: {suspect.get_alibi()}"
+        saved_note = self._ui.prompt_note_creation(clue_text)
+        if saved_note:
+            self._state.add_journal_entry(saved_note)
 
-            self._state.record_interrogation(suspect_id)
-            self.check_story_triggers()
+        self._state.record_interrogation(suspect_id)
+        self.check_story_triggers()
     
     def accuse(self):
         if len(self._state.get_journal()) < 2:
