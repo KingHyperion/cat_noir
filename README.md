@@ -20,43 +20,49 @@ No Python needed. Grab the file for your system from the [latest release](../../
 
 1. Install Python 3.
 2. Download or clone this repository.
-3. From the project root, run:
+3. From the project root, navigate to the `multi-file` directory and run:
    ```bash
    python main.py
    ```
 
 ## Project File Structure
 
-Everything lives in the repository root, alongside this README:
+Everything lives inside the repository:
 
 ```
 cat_noir/
-├── main.py            # Entry point, menu system, and game loop
-├── engine.py          # Generic rules evaluator & investigator
-├── state.py           # GameState tracking (acts, time, journal, saves)
-├── dialogue.py        # Dialogue pacing and `=-=` clue prompt UI
-├── data_loader.py     # OOP classes (Suspect, Location, CaseData)
+├── game.py            # Single-file version of the game
 ├── README.md
-├── data/
-│   └── case_1.py      # Official Case: The Case of the Golden Tuna
-└── .github/
-    └── workflows/
-        └── release.yml    # Builds the executables when a release tag is pushed
+├── .github/
+│   └── workflows/
+│       └── release.yml    # Builds the executables when a release tag is pushed
+└── multi-file/
+    ├── main.py            # Entry point, menu system, and game loop
+    ├── engine.py          # Generic rules evaluator & investigator
+    ├── state.py           # GameState tracking (acts, time, journal, saves)
+    ├── dialogue.py        # Dialogue pacing and `=-=` clue prompt UI
+    ├── data_loader.py     # OOP classes (Suspect, Location, CaseData)
+    └── data/
+        └── case_1.py      # Official Case: The Case of the Golden Tuna
 ```
 
 ## Core Features
 
-* **Engine and Story Data Separated:** Suspects, locations, and dialogue are declared in case files inside the `data/` folder, apart from the engine code.
-* **Manual Pacing:** Interactive pause prompts (`[Press Enter to continue...]`) keep text readable.
-* **Organic Investigation Loops:** Act progression and plot twists trigger naturally through gameplay actions (such as verifying alibis in Town Square).
-* **Customizable Journal & Saves:** Save default clues or write your own custom notes. Progress is saved to `savegame.json` in the folder you run the game from.
+- **Engine and Story Data Separated:** Suspects, locations, and dialogue are declared in case files inside the `multi-file/data/` folder, apart from the engine code.
+- **Manual Pacing:** Interactive pause prompts (`[Press Enter to continue...]`) keep text readable.
+- **Organic Investigation Loops:** Act progression and plot twists trigger naturally through gameplay actions (such as verifying alibis in Town Square).
+- **Customizable Journal & Saves:** Save default clues or write your own custom notes. Progress is saved to `savegame.json` in the folder you run the game from.
 
 ## Creating a Custom Case
 
-1. Add a new `.py` file to the `data/` folder that builds a `CaseData` object with your own suspects, locations, and dialogue (use `data/case_1.py` as a template).
-2. In `main.py`, import your case and pass it to `DetectiveEngine` in place of `case_1`.
-3. Run the game from source with `python main.py`.
+1. Add a new `.py` file to the `multi-file/data/` folder that builds a `CaseData` object with your own suspects, locations, and dialogue (use `multi-file/data/case_1.py` as a template).
+2. In `multi-file/main.py`, import your case and pass it to `DetectiveEngine` in place of `case_1`.
+3. Run the game from source:
+   ```bash
+   cd multi-file
+   python main.py
+   ```
 
 ## Building the Executables
 
-Executables are built automatically with PyInstaller by GitHub Actions. To publish a new version, create a new release on GitHub with a new tag (for example `v1.0.1`). The workflow builds the Windows, macOS, and Linux files and attaches them to that release.
+Executables are built automatically with PyInstaller by GitHub Actions from the `multi-file/` directory. To publish a new version, create a new release on GitHub with a new tag (for example `v1.0.1`). The workflow builds the Windows, macOS, and Linux files and attaches them to that release.

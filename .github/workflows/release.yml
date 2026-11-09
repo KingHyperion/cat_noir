@@ -22,18 +22,20 @@ jobs:
 
       - run: pip install pyinstaller
 
-      - run: pyinstaller --onefile --name cat_noir main.py
+      - name: Build executable with PyInstaller
+        working-directory: multi-file
+        run: pyinstaller --onefile --name cat_noir main.py
 
       - name: Rename output
         shell: bash
         run: |
           mkdir out
           if [ "$RUNNER_OS" = "Windows" ]; then
-            cp dist/cat_noir.exe out/cat_noir-windows.exe
+            cp multi-file/dist/cat_noir.exe out/cat_noir-windows.exe
           elif [ "$RUNNER_OS" = "macOS" ]; then
-            cp dist/cat_noir out/cat_noir-macos
+            cp multi-file/dist/cat_noir out/cat_noir-macos
           else
-            cp dist/cat_noir out/cat_noir-linux
+            cp multi-file/dist/cat_noir out/cat_noir-linux
           fi
 
       - uses: softprops/action-gh-release@v2
